@@ -41,8 +41,13 @@
         function getComputedStyle(element, prop) {
             if (element.currentStyle) {
                 return element.currentStyle[prop];
-            } else if (window.getComputedStyle) {
-                return window.getComputedStyle(element, null).getPropertyValue(prop);
+            } else if (window.getComputedStyle != null) {
+                var tmpStyle = window.getComputedStyle(element, null);
+                if (tmpStyle != null) {
+                    return tmpStyle.getPropertyValue(prop);
+                } else {
+                    return element.style[prop];
+                }
             } else {
                 return element.style[prop];
             }
